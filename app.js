@@ -65,7 +65,7 @@ let userCommand ='';
       render(exists);
     }
     else if(userCommand.toLowerCase()==="lookup"){
-      let userInput = prompt("Please input a employee name.");
+      let userInput = $('input').val();
       for(i=0;i<employeeList.length; i++){
         if(employeeList[i].name.toLowerCase() === userInput.toLowerCase()){
           htmlStr += `<p> ${employeeList[i].name}</p>`;
@@ -75,7 +75,7 @@ let userCommand ='';
       }
     }
     else if(userCommand.toLowerCase()==="contains"){
-      let userInput = prompt("Please input a string.");
+      let userInput = $('input').val();
       for(i=0;i<employeeList.length; i++){
         if(employeeList[i].name.toLowerCase().includes(userInput.toLowerCase()) === true){
           htmlStr += `<p> ${employeeList[i].name}</p>`;
@@ -86,9 +86,9 @@ let userCommand ='';
       }
     }
     else if(userCommand.toLowerCase()==="update"){
-      let userInput = prompt("Please input a name.");
-      let userField = prompt("Please input a field you would like to update.");
-      let userValue = prompt("Please input the value you would like to update with")
+      let userInput = $('input').val();
+      let userField = $('input').val();
+      let userValue = $('input').val();
       for(i=0;i<employeeList.length; i++){
         if(employeeList[i].name.toLowerCase() === userInput.toLowerCase()){
           if(userField.toLowerCase().includes("phone")){
@@ -111,9 +111,9 @@ let userCommand ='';
       }
     }
     else if(userCommand.toLowerCase()==="add"){
-      let userName = prompt("Please input a name.");
-      let userOffice = prompt("Please input the office number.");
-      let userPhone = prompt("Please input the phone number.")
+      let userName =$('input').val();
+      let userOffice = $('input').val();
+      let userPhone = $('input').val();
       let newEmployee = {
         name: userName,
         officeNum: userOffice,
@@ -128,7 +128,7 @@ let userCommand ='';
       }
     }
     else if(userCommand.toLowerCase()==="delete"){
-      let userName = prompt("Please input a name.");
+      let userName = $('input').val();
       for(i=0;i<employeeList.length; i++){
         if(employeeList[i].name.toLowerCase() === userName.toLowerCase()){
           employeeList.splice(i,1);
@@ -164,13 +164,37 @@ let userCommand ='';
   }
   const print = function(){
     userCommand = 'print';
+    $('input').removeClass('show'); 
+  }
+  const lookup = function(){
+    $('input').addClass('show');
+    userCommand = 'lookup';
+  }
+  const add = function(){
+    $('input').addClass('show');
+    userCommand = 'add';
+  }
+  const remove = function(){
+    $('input').addClass('show');
+    userCommand = 'delete';
+  }
+  const contains = function(){
+    $('input').addClass('show');
+    userCommand = 'contains';
+  }
+  const sort = function(){
     $('input').removeClass('show');
-    
+    userCommand = 'sort';
   }
   const render = function(htmlStr){
-    $('#list').html(htmlStr);
+    $('#content').html(htmlStr);
   }
 
-  $('verify').on('click', verify);
-  $('print').on('click', print);
-  $('submit').on('click', runCommand);
+  $('#verify').on('click', verify);
+  $('#print').on('click', print);
+  $('#sort').on('click', sort);
+  $('#lookup').on('click', print);
+  $('#add').on('click', print);
+  $('#delete').on('click', remove);
+  $('#contains').on('click', contains);
+  $('#submit').on('click', runCommand);
